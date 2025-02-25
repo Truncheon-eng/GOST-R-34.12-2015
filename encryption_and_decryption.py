@@ -32,8 +32,6 @@ def decryption(path_to_file: str, key: str, path_to_output_file: str):
         if len(key_binary) != 32:
             raise KeyLengthError
         keys = deploying_keys(key_binary)
-        if len(keys) != 32:
-            raise KeyLengthError
         with open(path_to_output_file, "wb") as output_file:
             while read_file.tell() != last_pos:
                 current_block = bytearray(read_file.read(16))
