@@ -1,6 +1,7 @@
 import argparse
 from encryption_and_decryption import encryption, decryption
 import binascii
+from errors import KeyLengthError
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="This application is the realization of GOST R 34.12-2015")
@@ -20,6 +21,8 @@ if __name__ == '__main__':
             encryption(args.input, args.key, args.output)
         elif args.mode == 1:
             decryption(args.input, args.key, args.output)
+    except KeyLengthError as error:
+        print(error)
     except FileNotFoundError as error:
         print(error)
     except binascii.Error as error:

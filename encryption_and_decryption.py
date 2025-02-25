@@ -1,4 +1,5 @@
 from transformations import block_encryption, deploying_keys, block_decryption
+from errors import KeyLengthError
 import base64
 
 
@@ -8,6 +9,8 @@ def encryption(path_to_file: str, key: str, path_to_output_file: str):
         last_pos = read_file.tell()
         read_file.seek(0)
         keys = deploying_keys(bytearray(base64.b64decode(key)))
+        if len(keys) != 32:
+            raise KeyLengthError
         with open(path_to_output_file, "wb") as output_file:
             len_of_last_block = int()
             while read_file.tell() != last_pos:
@@ -25,6 +28,8 @@ def decryption(path_to_file: str, key: str, path_to_output_file: str):
         last_pos = read_file.tell()
         read_file.seek(0)
         keys = deploying_keys(bytearray(base64.b64decode(key)))
+        if len(keys) != 32:
+            raise KeyLengthError
         with open(path_to_output_file, "wb") as output_file:
             while read_file.tell() != last_pos:
                 current_block = bytearray(read_file.read(16))
