@@ -9,7 +9,7 @@ def encryption(path_to_file: str, key: str, path_to_output_file: str):
         last_pos = read_file.tell()
         read_file.seek(0)
         key_binary = bytearray(base64.b64decode(key))
-        if len(key) != 32:
+        if len(key_binary) != 32:
             raise KeyLengthError
         keys = deploying_keys(key_binary)
         with open(path_to_output_file, "wb") as output_file:
@@ -29,7 +29,7 @@ def decryption(path_to_file: str, key: str, path_to_output_file: str):
         last_pos = read_file.tell()
         read_file.seek(0)
         key_binary = bytearray(base64.b64decode(key))
-        if len(key) != 32:
+        if len(key_binary) != 32:
             raise KeyLengthError
         keys = deploying_keys(key_binary)
         if len(keys) != 32:
